@@ -22,13 +22,18 @@ def get_roots(a, b, c):
     except:
         return None
 
-    D = b**2-4*a*c
-    if D < 0:
-        roots = []
-    elif D == 0:
-        roots = [(-b + math.sqrt(D)) / (2*a)]
+    if a != 0:
+        D = b**2-4*a*c
+        if D < 0:
+            roots = []
+        elif D == 0:
+            roots = [(-b + math.sqrt(D)) / (2*a)]
+        else:
+            roots = [(-b+math.sqrt(D))/(2*a), (-b-math.sqrt(D))/(2*a)]
+    elif b != 0:
+        roots = [-c/b]
     else:
-        roots = [(-b+math.sqrt(D))/(2*a), (-b-math.sqrt(D))/(2*a)]
+        roots = [c]
 
     return roots
 
@@ -57,6 +62,10 @@ async def show_plot(request: Request,
 
     a, b, c = int(var_a), int(var_b), int(var_c)
     roots = get_roots(var_a, var_b, var_c)
+
+    if roots is None:
+        return templates.TemplateResponse("index.html",
+                                          {"request": request, "roots": [], "picture": None})
 
     center = 0 if not roots else (roots[0] if len(roots) == 1 else (sum(roots)/len(roots)))
 
