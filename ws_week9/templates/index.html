@@ -1,0 +1,23 @@
+<html>
+<head>
+    <title>Quadratic equations plotter</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/style.css') }}">
+</head>
+<body>
+    <h2>Quadratic equations plotter</h2>
+    <div>
+        <form action="/show_plot" method="post">
+            <input id="var_a" name="var_a" type="number" placeholder="Enter a" required/>
+            <input id="var_b" name="var_b" type="number" placeholder="Enter b" required/>
+            <input id="var_c" name="var_c" type="number" placeholder="Enter c" required/>
+            <button type="submit">plot</button>
+        </form>
+    </div>
+    <div>
+        <p>roots: {{ roots }}</p>
+    </div>
+    <div>
+        <img src="data:image/png;base64, {{ picture }}" alt="plot">
+    </div>
+</body>
+</html>
