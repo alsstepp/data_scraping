@@ -32,8 +32,10 @@ def get_roots(a, b, c):
             roots = [(-b+math.sqrt(D))/(2*a), (-b-math.sqrt(D))/(2*a)]
     elif b != 0:
         roots = [-c/b]
-    else:
+    elif c == 0:
         roots = [c]
+    else:
+        roots = []
 
     return roots
 
@@ -49,7 +51,11 @@ async def main(request: Request):
 
 @app.get("/solve")
 async def solve(a, b, c):
-    return {"roots": get_roots(a, b, c)}
+    res = {"roots": get_roots(a, b, c)}
+    if res["roots"]:
+        return res
+    else:
+        return {"error": f"{a, b, c}"}
 
 
 @app.post("/show_plot")
